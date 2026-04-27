@@ -33,8 +33,17 @@ function todayStr() {
 function seedDefaults() {
     if (!localStorage.getItem('angkringan_users')) {
         setData('angkringan_users', [
-            { id: 1, username: 'admin', password: 'admin123' }
+            { id: 1, username: 'angkringanku', password: 'FaujanGantenk1121' }
         ]);
+    } else {
+        // Migrasi: Jika masih ada user 'admin' lama, update ke yang baru
+        const users = getData('angkringan_users');
+        const adminIdx = users.findIndex(u => u.username === 'admin');
+        if (adminIdx !== -1) {
+            users[adminIdx].username = 'angkringanku';
+            users[adminIdx].password = 'FaujanGantenk1121';
+            setData('angkringan_users', users);
+        }
     }
     if (!localStorage.getItem('angkringan_menus'))     setData('angkringan_menus', []);
     if (!localStorage.getItem('angkringan_antrians'))   setData('angkringan_antrians', []);

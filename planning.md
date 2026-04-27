@@ -35,8 +35,8 @@ angkringan/
 
 | Field | Value |
 |---|---|
-| Username | `admin` |
-| Password | `admin123` |
+| Username | `angkringanku` |
+| Password | `FaujanGantenk1121` |
 
 > Data user disimpan otomatis ke localStorage saat pertama kali halaman dibuka.
 
