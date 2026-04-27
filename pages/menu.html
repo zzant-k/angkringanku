@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="Manajemen menu makanan dan minuman angkringan">
+    <title>Menu — Angkringan Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/menu.css">
+</head>
+<body>
+
+<div class="page-wrapper">
+
+    <!-- PAGE HEADER -->
+    <header class="page-header">
+        <h1 class="page-header-title">Manajemen Menu</h1>
+        <button id="btn-add-menu" class="btn btn-primary btn-sm">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+            Tambah
+        </button>
+    </header>
+
+    <!-- FILTER TABS -->
+    <div class="filter-tabs" role="tablist" aria-label="Filter kategori">
+        <button class="filter-tab active" data-filter="semua" role="tab" aria-selected="true" id="filter-semua">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+                <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+            </svg>
+            Semua
+        </button>
+        <button class="filter-tab" data-filter="makanan" role="tab" aria-selected="false" id="filter-makanan">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 3a9 9 0 110 18A9 9 0 0112 3z"/>
+            </svg>
+            Makanan
+        </button>
+        <button class="filter-tab" data-filter="minuman" role="tab" aria-selected="false" id="filter-minuman">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M8 3v4l-2 4a6 6 0 1012 0l-2-4V3"/><path d="M8 3h8"/>
+            </svg>
+            Minuman
+        </button>
+    </div>
+
+    <!-- MENU LIST -->
+    <main class="content-area" style="padding-top:var(--space-3)">
+        <div id="menu-list">
+            <div class="empty-state">
+                <p class="text-muted text-sm">Memuat menu...</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- BOTTOM NAV -->
+    <nav class="bottom-nav" aria-label="Navigasi utama">
+        <a href="dashboard.html" class="nav-item" id="nav-dashboard">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+                <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+            </svg>
+            Dashboard
+        </a>
+        <a href="antrian.html" class="nav-item" id="nav-antrian">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+            </svg>
+            Antrian
+        </a>
+        <a href="menu.html" class="nav-item active" id="nav-menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 3h18v4H3z"/><path d="M3 9h18v12H3z"/>
+            </svg>
+            Menu
+        </a>
+        <a href="riwayat.html" class="nav-item" id="nav-riwayat">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="12 8 12 12 14 14"/>
+                <circle cx="12" cy="12" r="10"/>
+            </svg>
+            Riwayat
+        </a>
+    </nav>
+
+</div>
+
+<!-- ====== MODAL TAMBAH / EDIT MENU ====== -->
+<div class="modal-overlay" id="menu-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal">
+        <div class="modal-header">
+            <h2 class="modal-title" id="modal-title">Tambah Menu</h2>
+            <button class="modal-close" id="btn-close-menu-modal" aria-label="Tutup">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+            </button>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="input-nama">Nama Menu</label>
+            <input type="text" id="input-nama" class="form-control" placeholder="Contoh: Nasi Goreng Spesial" maxlength="150">
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label" for="input-harga">Harga</label>
+                <div class="harga-input-wrap">
+                    <span class="harga-prefix">Rp</span>
+                    <input type="number" id="input-harga" class="form-control" placeholder="0" min="0" step="500">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="input-kategori">Kategori</label>
+                <select id="input-kategori" class="form-control">
+                    <option value="makanan">Makanan</option>
+                    <option value="minuman">Minuman</option>
+                </select>
+            </div>
+        </div>
+
+        <button id="btn-save-menu" class="btn btn-primary btn-full">Simpan Menu</button>
+    </div>
+</div>
+
+<script type="module">
+    import { requireAuth } from '../js/auth.js';
+    import { loadMenus, filterMenus, openAddModal, saveMenu } from '../js/menu.js';
+    import { closeModal } from '../js/utils.js';
+
+    if (!requireAuth()) throw new Error('Not authenticated');
+
+    // Load menu
+    await loadMenus();
+
+    // Tambah menu
+    document.getElementById('btn-add-menu').addEventListener('click', openAddModal);
+
+    // Save menu
+    document.getElementById('btn-save-menu').addEventListener('click', saveMenu);
+
+    // Close modal
+    document.getElementById('btn-close-menu-modal').addEventListener('click', () => closeModal('menu-modal'));
+
+    // Filter tabs
+    document.querySelectorAll('.filter-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            document.querySelectorAll('.filter-tab').forEach(t => {
+                t.classList.remove('active');
+                t.setAttribute('aria-selected', 'false');
+            });
+            tab.classList.add('active');
+            tab.setAttribute('aria-selected', 'true');
+            filterMenus(tab.dataset.filter);
+        });
+    });
+
+    // Click overlay untuk tutup
+    document.getElementById('menu-modal-overlay').addEventListener('click', e => {
+        if (e.target === e.currentTarget) closeModal('menu-modal');
+    });
+</script>
+
+</body>
+</html>

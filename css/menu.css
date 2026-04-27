@@ -1,0 +1,110 @@
+/* ============================================================
+   menu.css — Halaman Manajemen Menu
+   ============================================================ */
+
+/* === FILTER TABS === */
+.filter-tabs {
+  display: flex;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  border-bottom: 1px solid var(--color-border);
+}
+.filter-tabs::-webkit-scrollbar { display: none; }
+
+.filter-tab {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  background: var(--color-surface);
+  text-transform: uppercase;
+}
+.filter-tab.active { background: var(--color-primary); color: #fff; border-color: var(--color-primary); }
+.filter-tab:hover:not(.active) { background: var(--color-surface-2); color: var(--color-text); }
+
+/* === MENU LIST === */
+.menu-list { display: flex; flex-direction: column; gap: var(--space-2); }
+
+.menu-item {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  transition: border-color var(--transition-fast);
+}
+.menu-item:hover { border-color: var(--color-text-muted); }
+
+.menu-item-body { flex: 1; min-width: 0; }
+.menu-item-name {
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.menu-item-price { font-size: var(--font-size-sm); font-weight: 500; color: var(--color-text-muted); }
+
+.menu-item-actions { display: flex; gap: var(--space-2); flex-shrink: 0; }
+
+/* === CATEGORY SECTION === */
+.category-section { margin-bottom: var(--space-6); }
+.category-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+  padding: 0 var(--space-1);
+}
+.category-header-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+}
+.category-header-icon svg { width: 12px; height: 12px; }
+
+.category-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+}
+.category-count { margin-left: auto; font-size: var(--font-size-xs); color: var(--color-text-dim); }
+
+/* === MODAL FORM === */
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); }
+
+.harga-input-wrap { position: relative; }
+.harga-prefix {
+  position: absolute;
+  left: var(--space-3);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  pointer-events: none;
+}
+.harga-input-wrap .form-control { padding-left: calc(var(--space-3) + 24px); }

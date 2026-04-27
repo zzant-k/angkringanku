@@ -1,0 +1,227 @@
+/* ============================================================
+   antrian.css — Halaman Antrian & QRIS
+   ============================================================ */
+
+/* === ANTRIAN LIST === */
+.antrian-list { display: flex; flex-direction: column; gap: var(--space-3); }
+
+.antrian-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: box-shadow var(--transition-fast);
+}
+
+.antrian-card-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-bg);
+}
+
+.queue-number {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.customer-info { flex: 1; min-width: 0; }
+.customer-name {
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--color-text);
+}
+.customer-time {
+  font-size: 11px;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 2px;
+}
+
+/* === ORDER ITEMS === */
+.antrian-card-body { padding: var(--space-3) var(--space-4); }
+
+.order-items { display: flex; flex-direction: column; gap: var(--space-1); margin-bottom: var(--space-3); }
+
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  padding: 2px 0;
+}
+.order-item-name { display: flex; align-items: center; gap: var(--space-2); }
+.order-qty {
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 0 4px;
+  font-weight: 600;
+  font-size: 10px;
+  color: var(--color-text);
+  min-width: 20px;
+  text-align: center;
+}
+.order-item-price { font-weight: 500; color: var(--color-text); }
+
+.antrian-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: var(--space-3);
+  border-top: 1px dashed var(--color-border);
+  margin-top: var(--space-2);
+}
+.antrian-total-label { font-size: var(--font-size-xs); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-muted); }
+.antrian-total-value { font-size: var(--font-size-md); font-weight: 700; color: var(--color-primary); }
+
+/* === ANTRIAN ACTIONS === */
+.antrian-card-footer {
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-bg);
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  gap: var(--space-2);
+}
+
+/* === FORM TAMBAH ANTRIAN === */
+.menu-select-section { margin-top: var(--space-2); }
+
+.menu-select-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+  max-height: 240px;
+  overflow-y: auto;
+  padding-right: var(--space-1);
+}
+
+.menu-select-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  user-select: none;
+}
+.menu-select-item:hover { border-color: var(--color-text-muted); }
+.menu-select-item.selected { border-color: var(--color-primary); background: var(--color-primary-dim); }
+
+.menu-check {
+  width: 16px;
+  height: 16px;
+  border-radius: 2px;
+  border: 1px solid var(--color-border);
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.menu-select-item.selected .menu-check { background: var(--color-primary); border-color: var(--color-primary); }
+.menu-check svg { width: 10px; height: 10px; color: #fff; display: none; }
+.menu-select-item.selected .menu-check svg { display: block; }
+
+.menu-select-info { flex: 1; min-width: 0; }
+.menu-select-name { font-size: var(--font-size-sm); font-weight: 600; color: var(--color-text); }
+.menu-select-price { font-size: var(--font-size-xs); color: var(--color-text-muted); margin-top: 2px; }
+
+.menu-select-qty { display: flex; align-items: center; gap: var(--space-2); flex-shrink: 0; }
+.qty-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  line-height: 1;
+}
+.qty-btn:hover { background: var(--color-surface-2); }
+.qty-display { font-size: var(--font-size-sm); font-weight: 600; min-width: 20px; text-align: center; }
+
+/* === ORDER SUMMARY === */
+.order-summary {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3) var(--space-4);
+  margin-top: var(--space-4);
+}
+.order-summary-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-1);
+}
+.order-summary-total {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  padding-top: var(--space-2);
+  border-top: 1px dashed var(--color-border);
+  margin-top: var(--space-2);
+  color: var(--color-text);
+}
+
+/* === QRIS MODAL === */
+.qris-wrapper { text-align: center; }
+
+.qris-header {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+.qris-label {
+  font-size: 10px;
+  color: var(--color-text-muted);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-1);
+}
+.qris-amount { font-size: var(--font-size-2xl); font-weight: 700; color: var(--color-primary); }
+.qris-customer { font-size: var(--font-size-sm); color: var(--color-text-muted); margin-top: var(--space-1); }
+
+.qr-container { display: flex; justify-content: center; margin-bottom: var(--space-4); }
+.qr-frame { background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius-sm); padding: 16px; }
+#qr-code canvas, #qr-code img { display: block; }
+
+.qris-instruction {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-5);
+  line-height: 1.6;
+}
+.qris-actions { display: flex; gap: var(--space-3); }
