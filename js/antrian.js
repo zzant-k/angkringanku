@@ -2,6 +2,7 @@
  * antrian.js — Antrian management + real-time kalkulasi
  */
 import api from './api.js';
+import LaporanManager from './laporan.js';
 import { showToast, formatRupiah, escHtml, formatTime, openModal, closeModal } from './utils.js';
 
 let antrianList  = [];
@@ -38,6 +39,9 @@ function renderAntrian() {
     // Bind events
     container.querySelectorAll('.btn-bayar').forEach(btn => {
         btn.addEventListener('click', () => openPaymentModal(parseInt(btn.dataset.id)));
+    });
+    container.querySelectorAll('.btn-tunai').forEach(btn => {
+        btn.addEventListener('click', () => bayarTunai(parseInt(btn.dataset.id)));
     });
     container.querySelectorAll('.btn-selesai').forEach(btn => {
         btn.addEventListener('click', () => selesaikanAntrian(parseInt(btn.dataset.id)));
@@ -76,7 +80,10 @@ function antrianCardHTML(antrian) {
                         <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
                         <line x1="1" y1="10" x2="23" y2="10"/>
                     </svg>
-                    Bayar QRIS
+                    QRIS
+                </button>
+                <button class="btn btn-primary btn-sm flex-1 btn-tunai" data-id="${antrian.id}">
+                    Tunai
                 </button>
                 <button class="btn btn-ghost btn-sm btn-selesai" data-id="${antrian.id}" title="Selesaikan tanpa bayar">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -268,6 +275,12 @@ export async function konfirmasiPembayaran() {
             total:      currentAntrianForPayment.total,
             bayar_via:  'QRIS',
         });
+        
+        // Simpan ke Laporan Harian (laporan.js)
+        const a = currentAntrianForPayment;
+        const pesananStr = a.menus.map(m => `${m.nama} (x${m.jumlah})`).join(', ');
+        LaporanManager.tambahData(a.nama_pelanggan, pesananStr, a.total);
+
         showToast('Pembayaran berhasil dikonfirmasi!', 'success');
         closeModal('qris');
         currentAntrianForPayment = null;
@@ -282,10 +295,42 @@ export async function konfirmasiPembayaran() {
     }
 }
 
+async function bayarTunai(antrianId) {
+    const a = antrianList.find(x => x.id === antrianId);
+    if (!a) return;
+
+    if (!confirm(`Konfirmasi pembayaran TUNAI untuk ${a.nama_pelanggan}?\nTotal: ${formatRupiah(a.total)}`)) return;
+
+    try {
+        await api.createTransaksi({
+            antrian_id: a.id,
+            total:      a.total,
+            bayar_via:  'Tunai',
+        });
+
+        // Simpan ke Laporan Harian (laporan.js)
+        const pesananStr = a.menus.map(m => `${m.nama} (x${m.jumlah})`).join(', ');
+        LaporanManager.tambahData(a.nama_pelanggan, pesananStr, a.total);
+
+        showToast('Pembayaran tunai berhasil!', 'success');
+        await loadAntrian();
+    } catch (err) {
+        showToast(err.message, 'error');
+    }
+}
+
 async function selesaikanAntrian(id) {
     if (!confirm('Selesaikan antrian ini tanpa pembayaran QRIS?')) return;
+    const a = antrianList.find(x => x.id === id);
     try {
         await api.deleteAntrian(id);
+
+        // Simpan ke Laporan Harian (laporan.js) jika antrian ditemukan
+        if (a) {
+            const pesananStr = a.menus.map(m => `${m.nama} (x${m.jumlah})`).join(', ');
+            LaporanManager.tambahData(a.nama_pelanggan, pesananStr, a.total);
+        }
+
         showToast('Antrian diselesaikan.', 'success');
         await loadAntrian();
     } catch (err) {
