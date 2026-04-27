@@ -11,13 +11,13 @@ const USER_KEY  = 'angkringan_user';
  * Hitung base URL folder root project secara otomatis.
  * Bekerja baik dari /angkringanku/ maupun dari subfolder /pages/.
  */
-function getBaseUrl() {
-    const path = window.location.pathname; // e.g. /angkringanku/pages/dashboard.html
-    // Hapus segmen terakhir (nama file) dan "/pages" jika ada
+export function getBaseUrl() {
+    const path = window.location.pathname;
     const base = path
-        .replace(/\/[^/]+\.html$/, '')   // hapus nama file
-        .replace(/\/pages$/, '');         // hapus /pages jika di subfolder
-    return base; // e.g. /angkringanku
+        .replace(/\/[^/]*\.html$/, '') // hapus nama file .html
+        .replace(/\/pages$/, '')      // hapus /pages jika di subfolder
+        .replace(/\/$/, '');          // hapus trailing slash jika ada
+    return base;
 }
 
 export async function login(username, password) {

@@ -91,7 +91,7 @@
 </div>
 
 <script type="module">
-    import { login, redirectIfAuth } from './js/auth.js';
+    import { login, redirectIfAuth, getBaseUrl } from './js/auth.js';
 
     // Jika sudah login, langsung redirect
     redirectIfAuth();
@@ -134,8 +134,7 @@
         try {
             await login(username, password);
             // Redirect ke dashboard setelah login berhasil
-            const base = window.location.pathname.replace(/\/[^/]+$/, '');
-            window.location.href = base + '/pages/dashboard.html';
+            window.location.href = getBaseUrl() + '/pages/dashboard.html';
         } catch (err) {
             showError(err.message || 'Login gagal. Periksa kembali kredensial Anda.');
         } finally {
