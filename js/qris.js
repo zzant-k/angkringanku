@@ -5,17 +5,11 @@ export function generateQR(total) {
     const container = document.getElementById('qr-code');
     if (!container) return;
     container.innerHTML = '';
-    const payload = `QRIS.ID|ANGKRINGAN.KU|TOTAL:${Math.round(total)}|${Date.now()}`;
-    if (typeof QRCode === 'undefined') {
-        container.innerHTML = '<p style="color:var(--color-text-muted);font-size:12px;">QR Code tidak tersedia.</p>';
-        return;
+    
+    const qrisImage = localStorage.getItem('angkringan_qris_image');
+    if (qrisImage) {
+        container.innerHTML = `<img src="${qrisImage}" alt="QRIS" style="width: 100%; height: 100%; object-fit: contain; border-radius: 8px;">`;
+    } else {
+        container.innerHTML = '<p style="color:var(--color-text-muted);font-size:12px;text-align:center;">Gambar QRIS tidak tersedia.</p>';
     }
-    new QRCode(container, {
-        text: payload,
-        width: 200,
-        height: 200,
-        colorDark: '#000',
-        colorLight: '#fff',
-        correctLevel: QRCode.CorrectLevel.M,
-    });
 }

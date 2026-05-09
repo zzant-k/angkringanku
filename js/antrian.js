@@ -253,6 +253,11 @@ function openPaymentModal(antrianId) {
     currentAntrianForPayment = antrianList.find(a => a.id === antrianId);
     if (!currentAntrianForPayment) return;
 
+    if (!localStorage.getItem('angkringan_qris_image')) {
+        showToast('Silakan tambahkan gambar QRIS di menu Manajemen Menu terlebih dahulu.', 'error');
+        return;
+    }
+
     document.getElementById('qris-amount').textContent   = formatRupiah(currentAntrianForPayment.total);
     document.getElementById('qris-customer').textContent = currentAntrianForPayment.nama_pelanggan;
 
